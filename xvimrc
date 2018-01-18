@@ -1,0 +1,234 @@
+:imap jj <Esc>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+ XVim config.
+ " Author: 邓锦龙(BronteDeng)
+ " Note: This file contains base keymap and xvim cmd keymap.
+ "       Unfrequently used keymap is indent right.
+ "       If lost document focus, use menu Navigate -> movie to focus to editor (cmd + j)
+ " Data: Sat Mar 15 10:05:14 CST 2014
+ """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+ """""""""""""""""""""""""""""""""""""""""
+ " assistant editor and jump between Frame
+ """""""""""""""""""""""""""""""""""""""""
+ " show standard editor to close assistant editor
+ "map ,sa :xccmd changeToGeniusEditor<CR>
+ " add new assistant editor
+ "map ,aa :xccmd addAssistantEditor<CR>
+ " del one assistant editor 
+ "map ,da :xccmd removeAssistantEditor<CR>
+ " move between windows
+ map <C-j> <C-w>j<CR>
+ map <C-k> <C-w>k<CR>
+ map <C-h> <C-w>h<CR>
+ map <C-l> <C-w>l<CR>
+
+ """"""""""""""""""""""""""""""""""""""""""""""""""""
+ "tab
+ """"""""""""""""""""""""""""""""""""""""""""""""""""
+ " tab new
+ map ,tn :xccmd newTab<CR>
+ " tab close
+ map ,tc :tabclose<CR>
+ " tab pre
+ map ,ti :xccmd selectPreviousTab<CR>
+ " tab next
+ map ,to :xccmd selectNextTab<CR>
+
+ """""""""""""""""""""""""""""""""""""""""""""""""""
+ " View
+ " Note: standard editor shortkey is convenient
+ """""""""""""""""""""""""""""""""""""""""""""""""""
+ " Code Snippet Library
+ map ,cs :xcmenucmd Show Code Snippet Library<CR>
+ " File Template Library
+     ""map ,ft :xcmenucmd Show File Template Library<CR>
+ "Media Library
+     "map ,ml :xcmenucmd Show Media Library<CR>
+     " (Quick) help Inspector
+     map ,hi :xcmenucmd Show Quick Help Inspector<CR>
+     " File inspector
+     map ,fi :xcmenucmd Show File Inspector<CR>
+
+     " toggle navigator, debug area, utilities, ToolBar  
+     " l-left, b-bottom, r-right, t-top or toolbar
+     map <C-a>[ :xccmd toggleNavigatorsVisibility<CR>
+     map <C-a>= :xccmd toggleDebuggerVisibility<CR>
+     map <C-a>] :xccmd toggleUtilitiesVisibility<CR>
+     "map <C-a>= :xccmd toggleToolbarShown<CR>
+     
+     """"""""""""""""""""""""""""""""""""""""""""""""""
+ "Navigate
+ """"""""""""""""""""""""""""""""""""""""""""""""""
+ " dc-debug console
+ map ,dc :xcmenucmd Activate Console<CR>
+
+ " open current file in selected editor
+ "map ,oi :xcmenucmd Open in…<CR>
+ " ctrl+i/o maybe better
+ map <C-i> :xccmd goForwardInHistoryByCommand<CR>
+ map <C-o> :xccmd goBackInHistoryByCommand<CR>
+ map ,f :xccmd goForwardInHistoryByCommand<CR>
+ map ,b :xccmd goBackInHistoryByCommand<CR>
+ map ,jd :xcmenucmd Jump to Definition<CR> use gd instead.
+ map ,jn :xcmenucmd Jump to Next Issue<CR>
+ "map ,ni :xcmenucmd Fix Next Issue<CR>
+ map ,jp :xcmenucmd Jump to Previous Issue<CR>
+ "map ,pi :xcmenucmd Fix Previous Issue<CR>
+ " switch between .h/.m
+ " You can use vim cmd |gd| and |ctrl+i/o| to navigate between files.
+ map <Tab> :xccmd jumpToNextCounterpart<CR>
+ " place holder is Like <#...#>,  jump to placeholder then use Key <Tab>.
+ "map ,np :xccmd selectNextPlaceholder<CR>
+ "map ,pp :xccmd selectPreviousPlaceholder<CR>
+
+ " reveal file or symbol
+ map ,pr :xccmd revealInProjectNavigator<CR>
+ "map ,sr :xccmd revealInSymbolNavigator<CR>
+
+ """"""""""""""""""""""""""""""""""""""""""""""""""
+ "Editor
+ """"""""""""""""""""""""""""""""""""""""""""""""""
+ " Show Completions
+ "map ,c :xccmd complete<CR>
+ " Edit all in scope
+ "map ,ea :xccmd toggleTokenizedEditing<CR>
+ " Fold
+ nnoremap <SPACE> :xccmd fold<CR>
+ nnoremap zz :xccmd unfold<CR>
+ nnoremap <C-z> :xccmd unfoldAll<CR>
+ map ,fa :xccmd foldAllMethods<CR>
+ map ,ua :xccmd unfoldAllMethods<CR>
+ map ,fc :xccmd foldAllComments<CR>
+ map ,uc :xccmd unfoldAllComments<CR>
+ """"""""""""""""""""""""""""""""""""""""""""""""""
+ "Project
+ """"""""""""""""""""""""""""""""""""""""""""""""""
+ map ,r  :run<CR>
+ map ,bp  :xcmenucmd Build<CR>
+ map ,cp  :xcmenucmd Clean<CR>
+
+ """"""""""""""""""""""""""""""""""""""""""""""""""
+ " Miscellaneous
+ """"""""""""""""""""""""""""""""""""""""""""""""""
+ "quick save and quit
+ map ,w :w<CR>
+
+ set ignorecase
+ 
+ " search the string cursor points to. Very Usefull.
+ map ,s viw:xccmd findSelectedTextInWorkspace<CR>
+
+ " search document for text cursor points to.
+ map ,hh :xccmd searchDocumentationForSelectedText<CR>
+
+ " Filter file (view menus achieve the goal too)
+ map ,fn :xcmenucmd Filter in Navigator<CR>
+ map ,fl :xcmenucmd Filter in Library<CR>
+
+ " Open Quickly
+ " Note: slower then short key |cmd+shift+o|
+ map ,o  :xccmd openQuickly<CR>
+ " Close Window
+ map ,cw  :xccmd performClose<CR>
+ " close current file
+ map ,q  :xccmd closeDocument<CR>
+ " show in Finder
+ map ,in  :xccmd showInFinder<CR>
+ " cmd+L, go to line
+ map ,l  :xccmd openQuicklyScoped<CR>
+
+ set number
+ set relativenumber
+ " insert a space
+ nmap ,k i <ESC>i
+ nmap ; :
+ " quick replace word
+ nmap vp viwpyiw
+ nmap 0 ^
+ " yank/select block like
+ " method {
+ " }
+ nmap yab V$%jy
+ nmap vab V$%j
+
+ " save when esc
+ ino <Esc> <Esc>:xcmenucmd Save<CR>
+
+ nnoremap <CR> <c-m>
+ vnoremap <CR> s
+ " navigate through window 
+ nnoremap <C-a> <C-w>
+ " quick add ; at end of statement
+ inoremap <c-;> <ESC>A;<ESC>o
+
+ " Move by line in normal mode
+ " <c-e>  move up
+ " <c-y>  move down
+ ""==============================================================================
+" closepairs.vim - Auto closes pairs of characters
+"==============================================================================
+"
+" Author:   NoWhereMan (Edoardo Vacchi) <uncommonnonsense at gmail dot com>
+" Version:  0.1
+" URL: 	    http://www.flatpress.org/ 
+" License:  Public Domain
+"==============================================================================
+
+
+"inoremap ( ()<left>
+inoremap { {}<left>
+inoremap [ []<left>
+
+vnoremap <leader>" "zdi"<c-r>z"
+vnoremap <leader>' "zdi'<c-r>z'
+vnoremap <leader>( "zdi(<c-r>z)
+vnoremap <leader>[ "zdi[<c-r>z]
+vnoremap <leader>{ "zdi{<c-r>z}
+
+inoremap <expr> <bs> <SID>delpair()
+
+inoremap <expr> ) <SID>escapepair(')')
+inoremap <expr> } <SID>escapepair('}')
+inoremap <expr> ] <SID>escapepair(']')
+
+inoremap <expr> " <SID>pairquotes('"')
+inoremap <expr> ' <SID>pairquotes("'")
+
+
+function! s:delpair()
+	let l:lst = ['""',"''",'{}','[]','()']
+	let l:col = col('.')
+	let l:line = getline('.')
+	let l:chr = l:line[l:col-2 : l:col-1]
+	if index(l:lst, l:chr) > -1
+		return "\<bs>\<del>"
+	else
+		let l:chr = l:line[l:col-3:l:col-2]
+		if (index(l:lst, l:chr)) > - 1
+			return "\<bs>\<bs>"
+		endif
+		return "\<bs>"
+endf
+
+function! s:escapepair(right)
+	let l:col = col('.')
+	let l:chr = getline('.')[l:col-1]
+	if a:right == l:chr 
+		return "\<right>"
+	else
+		return a:right
+
+endf
+
+function! s:pairquotes(pair)
+	let l:col = col('.')
+	let l:line = getline('.')
+	let l:chr = l:line[l:col-1]
+	if a:pair == l:chr 
+		return "\<right>"
+	else
+		return a:pair.a:pair."\<left>"
+
+endf
+
